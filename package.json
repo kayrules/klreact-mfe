@@ -1,0 +1,20 @@
+{
+  "name": "ibk-mfe",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "repository": "https://github.com/kayrules/klreact-mfe.git",
+  "author": "kayrules <kayrules@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start:container": "yarn --cwd packages/container start",
+    "start:auth": "yarn --cwd packages/auth start",
+    "start:lifestyle": "yarn --cwd packages/lifestyle start",
+    "start:ui-catalog": "yarn --cwd libraries/mfe-ui start",
+    "start": "yarn start:container & yarn start:auth & yarn start:lifestyle"
+  },
+  "workspaces": [
+    "packages/*",
+    "libraries/*"
+  ]
+}

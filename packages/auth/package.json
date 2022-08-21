@@ -1,0 +1,43 @@
+{
+  "name": "auth",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "webpack serve --config config/webpack.dev.js",
+    "build": "webpack --config config/webpack.prod.js",
+    "start:sit1": "env-cmd -f env/.env.sit1 npm start",
+    "start:sit2": "env-cmd -f env/.env.sit2 npm start",
+    "start:mock": "env-cmd -f env/.env.mock npm start",
+    "build:sit1": "env-cmd -f env/.env.sit1 npm build",
+    "build:sit2": "env-cmd -f env/.env.sit2 npm build"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.6.2",
+    "axios": "^0.24.0",
+    "crypto-js": "^4.1.1",
+    "@klreact-mfe/mfe-ui": "*",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-redux": "^7.2.5",
+    "react-router-dom": "^5.3.0",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.5",
+    "@babel/plugin-transform-runtime": "^7.15.0",
+    "@babel/preset-env": "^7.15.6",
+    "@babel/preset-react": "^7.14.5",
+    "babel-loader": "^8.2.2",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^6.3.0",
+    "env-cmd": "^10.1.0",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.3.2",
+    "redux-logger": "^3.0.6",
+    "style-loader": "^3.3.0",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.53.0",
+    "webpack-cli": "^4.8.0",
+    "webpack-dev-server": "^4.2.1",
+    "webpack-merge": "^5.8.0"
+  }
+}
