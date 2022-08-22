@@ -6,12 +6,13 @@
     "build": "webpack --config config/webpack.prod.js"
   },
   "dependencies": {
+    "@klreact-mfe/mfe-ui": "*",
     "@reduxjs/toolkit": "^1.6.2",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
-    "@klreact-mfe/mfe-ui": "*",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-loadable": "^5.5.0",
     "react-redux": "^7.2.5",
     "react-router-dom": "^5.3.0"
   },

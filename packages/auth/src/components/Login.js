@@ -11,16 +11,217 @@ import {
   CheckCircle as CheckCircleIcon,
   Cancel as CancelIcon
 } from "@klreact-mfe/mfe-ui";
-import { isMicro } from '../utils/micro';
-import { retrieveData } from '../utils/persistState';
-import {
-  constructPWPadding,
-  encryptDataHsm,
-  decryptHsm
-} from '../utils/CryptoProvider';
+import secureImage from "../assets/secure-image.jpg";
 import { init } from '../redux/slices/login/init';
 import { getSecretPhrase } from '../redux/slices/preLogin/getSecretPhrase';
 import { login } from '../redux/slices/login/login';
+
+const Login = (props) => {
+  const loginRef = useRef(null);
+  const { width } = useDimensions(loginRef);
+  const history = useHistory();
+
+  const dispatch = useDispatch()
+  const secretPhrase = useSelector(state => state.AUT.preLogin.getSecretPhrase.data?.secretPhrase);
+  const userType = useSelector(state => state.AUT.preLogin.getSecretPhrase.data?.userType);
+
+  const [secureWordWidth, setSecureWordWidth] = useState(0);
+  const [loginPressed, setLoginPressed] = useState(false);
+  const [isSecureWord, setIsSecureWord] = useState(false);
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [focused, setFocused] = React.useState(false);
+  const shrink = username.length > 0;
+  const passwordEntered = password.length > 0;
+
+  useEffect(() => {
+    if (loginRef.current) {
+      setSecureWordWidth(width);
+    }
+  }, [width]);
+
+  // useEffect(() => {
+  //   if (isMicro()) {
+  //     dispatch(init());
+  //   }
+  // }, []);
+
+  useEffect(() => {
+    if (secretPhrase || userType) {
+      setLoginPressed(true);
+    } else {
+      setLoginPressed(false);
+    }
+  }, [secretPhrase, userType]);
+
+  const onGetSecretPhrase = (event) => {
+    event.preventDefault();
+
+    /* remove leading and trailing spaces */
+    const usernameWithoutSpaces = username?.replace(/^\s+|\s+$/g, '');
+    if (usernameWithoutSpaces.length >= 6) {
+      dispatch(getSecretPhrase({
+        username
+      }))
+    } else {
+      // return error here
+      console.error('Must be at least 6 chars')
+    }
+  }
+
+  const onRedirect = (path) => () => {
+    history.push(path);
+  }
+
+  const onFailedLogin = () => {
+      alert('Login failed!!');
+  }
+
+  const onLogin = (event) => {
+    event.preventDefault();
+    const data = {
+      userId: username,
+      password: password,
+    };
+    dispatch(login({ data, onSuccess: onRedirect('/dashboard'), onError: onFailedLogin }));
+  }
+
+  return (
+    <>
+      <Grid
+        container
+        ref={loginRef}
+        spacing={0}
+        sx={{ ...styles.mainContainer, ...styles.usernameContainer }}
+      >
+        <Grid
+          container
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          sx={loginPressed ? { ...styles.gridSubContainer, ...styles.greyBg } : { ...styles.gridSubContainer }}
+        >
+          <Box sx={styles.outerBox}>
+            <TextField
+              label="Username"
+              variant="standard"
+              InputProps={{
+                disableUnderline: true,
+                sx: loginPressed ? styles.inputWithoutLabel : styles.input,
+              }}
+              InputLabelProps={{
+                sx: loginPressed ? styles.inputLabelDisappear : focused || shrink ? styles.inputLabelFocused : styles.inputLabelNoShrink,
+              }}
+              onChange={(event) => setUsername(event.target.value)}
+              onFocus={(event) => {
+                setFocused(true);
+              }}
+              onBlur={(event) => {
+                setFocused(false);
+              }}
+              fullWidth
+              disabled={loginPressed}
+            />
+            {!loginPressed && (
+              <Button
+                variant="contained"
+                color="primary"
+                disableElevation
+                size="small"
+                sx={styles.loginButton}
+                disabled={!shrink}
+                onClick={onGetSecretPhrase}
+              >
+                LOG IN {props.name}
+              </Button>
+            )}
+          </Box>
+        </Grid>
+      </Grid>
+      {loginPressed && (
+        <Grid
+          container
+          sx={{ ...styles.mainContainer, ...styles.secureWordContainer, width: secureWordWidth }}
+        >
+          <Grid
+            container
+            style={{ justifyContent: "center", paddingTop: '24px' }}
+          >
+            <Grid item sx={styles.blueBox}>
+              <Box component="img" src={secureImage} alt="Secure Image" sx={styles.secureImage} />
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            sx={{
+              justifyContent: "center",
+              paddingTop: '16px',
+              paddingBottom: '16px',
+            }}
+          >
+            <Grid item>
+              <Typography sx={styles.darkGreyText} align="center">
+                Confirm this is your Secure Image?
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            sx={{
+              justifyContent: "center",
+              paddingBottom: '20px',
+            }}
+          >
+            <CheckCircleIcon
+              sx={styles.checkCircleIcon}
+              style={{ color: isSecureWord ? "#0067b1" : "#424b57" }}
+              onClick={(event) => setIsSecureWord(true)}
+            />
+            <CancelIcon
+              sx={styles.cancelIcon}
+              onClick={(event) => {
+                setLoginPressed(false);
+                setIsSecureWord(false);
+              }}
+            />
+          </Grid>
+          {isSecureWord && (
+            <Grid
+              container
+              sx={{
+                justifyContent: "flex-end",
+                paddingBottom: '20px',
+              }}
+            >
+              <TextField
+                label="Password"
+                variant="filled"
+                fullWidth
+                type="password"
+                sx={styles.passwordInput}
+                InputProps={{
+                  sx: styles.passwordInputProp,
+                }}
+                onChange={event => setPassword(event.target.value)}
+              />
+              <Button
+                variant="contained"
+                color="primary"
+                disableElevation
+                size="small"
+                sx={styles.secureWordButton}
+                disabled={!passwordEntered}
+                onClick={onLogin}
+              >
+                LOG IN
+              </Button>
+            </Grid>
+          )}
+        </Grid>
+      )}
+    </>
+  );
+};
 
 const styles = {
   mainContainer: {
@@ -109,10 +310,14 @@ const styles = {
   },
   blueBox: {
     backgroundColor: "#0067b1",
-    padding: '6px',
-    width: '200px',
-    height: '36px',
-    borderRadius: '7px',
+    width: '140px',
+    height: '140px',
+    borderRadius: '70px',
+    overflow: 'hidden',
+  },
+  secureImage: {
+    width: '140px',
+    height: '140px',
   },
   darkGreyText: {
     color: "#424b57",
@@ -141,246 +346,6 @@ const styles = {
     width: '100%',
     position: 'relative',
   }
-};
-
-// SIT2 env file
-const hmkKey = '5497B691458FC1CD31A16116701F57F8';
-
-const Login = (props) => {
-  const loginRef = useRef(null);
-  const { width } = useDimensions(loginRef);
-  const history = useHistory();
-
-  const dispatch = useDispatch()
-  const secretPhrase = useSelector(state => state.AUT.preLogin.getSecretPhrase.data?.secretPhrase);
-  const userType = useSelector(state => state.AUT.preLogin.getSecretPhrase.data?.userType);
-  const preLogin = retrieveData('Prelogin');
-
-  const [secureWordWidth, setSecureWordWidth] = useState(0);
-  const [loginPressed, setLoginPressed] = useState(false);
-  const [isSecureWord, setIsSecureWord] = useState(false);
-  const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [focused, setFocused] = React.useState(false);
-  const shrink = username.length > 0;
-  const passwordEntered = password.length > 0;
-
-  useEffect(() => {
-    if (loginRef.current) {
-      setSecureWordWidth(width);
-    }
-  }, [width]);
-
-  useEffect(() => {
-    if (isMicro()) {
-      dispatch(init());
-    }
-  }, []);
-
-  useEffect(() => {
-    // TODO: handle usertype '0', no secretPhrase
-    if (secretPhrase || userType) {
-      setLoginPressed(true);
-    } else {
-      setLoginPressed(false);
-    }
-  }, [secretPhrase, userType]);
-
-  const onGetSecretPhrase = (event) => {
-    event.preventDefault();
-
-    /* remove leading and trailing spaces */
-    const usernameWithoutSpaces = username?.replace(/^\s+|\s+$/g, '');
-    if (usernameWithoutSpaces.length >= 6) {
-      dispatch(getSecretPhrase({
-        username
-      }))
-    } else {
-      // return error here
-      console.error('Must be at least 6 chars')
-    }
-  }
-
-  const onRedirect = (path) => () => {
-    if (isMicro()) {
-      alert('Login is successful!!');
-    } else {
-      history.push(path);
-    }
-  }
-
-  const onFailedLogin = () => {
-    if (!isMicro()) {
-      alert('Login failed!!');
-    }
-  }
-
-  const onLogin = (event) => {
-    event.preventDefault();
-
-    const coExistance = preLogin?.data?.appConfig?.find(
-      item => item.parameter === 'coexistence.flag'
-    )?.value;
-
-    const pwParam = constructPWPadding(password, coExistance === 'TRUE');
-
-    const zpkKey = preLogin?.data?.zmkZpkEncrypted;
-    const decryptedZpkKey = decryptHsm(hmkKey, zpkKey);
-    const keyedPassword1 = encryptDataHsm(decryptedZpkKey, pwParam[0]);
-    const keyedPassword2 =
-      pwParam.length > 1
-        ? encryptDataHsm(decryptedZpkKey, pwParam[1])
-        : null;
-    const data = keyedPassword2
-      ? {
-          userId: username,
-          keyedPassword1,
-          keyedPassword2
-        }
-      : {
-          userId: username,
-          keyedPassword1
-        };
-    dispatch(login({ data, onSuccess: onRedirect('/dashboard'), onError: onFailedLogin }));
-  }
-
-  return (
-    <>
-      <Grid
-        container
-        ref={loginRef}
-        spacing={0}
-        sx={{ ...styles.mainContainer, ...styles.usernameContainer }}
-      >
-        <Grid
-          container
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          sx={loginPressed ? { ...styles.gridSubContainer, ...styles.greyBg } : { ...styles.gridSubContainer }}
-        >
-          <Box sx={styles.outerBox}>
-            <TextField
-              label="Username"
-              variant="standard"
-              InputProps={{
-                disableUnderline: true,
-                sx: loginPressed ? styles.inputWithoutLabel : styles.input,
-              }}
-              InputLabelProps={{
-                sx: loginPressed ? styles.inputLabelDisappear : focused || shrink ? styles.inputLabelFocused : styles.inputLabelNoShrink,
-              }}
-              onChange={(event) => setUsername(event.target.value)}
-              onFocus={(event) => {
-                setFocused(true);
-              }}
-              onBlur={(event) => {
-                setFocused(false);
-              }}
-              fullWidth
-              disabled={loginPressed}
-            />
-            {!loginPressed && (
-              <Button
-                variant="contained"
-                color="primary"
-                disableElevation
-                size="small"
-                sx={styles.loginButton}
-                disabled={!shrink}
-                onClick={onGetSecretPhrase}
-              >
-                LOG IN
-              </Button>
-            )}
-          </Box>
-        </Grid>
-      </Grid>
-      {loginPressed && (
-        <Grid
-          container
-          sx={{ ...styles.mainContainer, ...styles.secureWordContainer, width: secureWordWidth }}
-        >
-          <Grid
-            container
-            style={{ justifyContent: "center", paddingTop: '24px' }}
-          >
-            <Grid item sx={styles.blueBox}>
-              <Typography sx={styles.whiteText} align="center">
-                strawberry
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid
-            container
-            sx={{
-              justifyContent: "center",
-              paddingTop: '16px',
-              paddingBottom: '16px',
-            }}
-          >
-            <Grid item>
-              <Typography sx={styles.darkGreyText} align="center">
-                Confirm this is your Secure Word?
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid
-            container
-            sx={{
-              justifyContent: "center",
-              paddingBottom: '20px',
-            }}
-          >
-            <CheckCircleIcon
-              sx={styles.checkCircleIcon}
-              style={{ color: isSecureWord ? "#0067b1" : "#424b57" }}
-              onClick={(event) => setIsSecureWord(true)}
-            />
-            <CancelIcon
-              sx={styles.cancelIcon}
-              onClick={(event) => {
-                setLoginPressed(false);
-                setIsSecureWord(false);
-              }}
-            />
-          </Grid>
-          {isSecureWord && (
-            <Grid
-              container
-              sx={{
-                justifyContent: "flex-end",
-                paddingBottom: '20px',
-              }}
-            >
-              <TextField
-                label="Password"
-                variant="filled"
-                fullWidth
-                type="password"
-                sx={styles.passwordInput}
-                InputProps={{
-                  sx: styles.passwordInputProp,
-                }}
-                onChange={event => setPassword(event.target.value)}
-              />
-              <Button
-                variant="contained"
-                color="primary"
-                disableElevation
-                size="small"
-                sx={styles.secureWordButton}
-                disabled={!passwordEntered}
-                onClick={onLogin}
-              >
-                LOG IN
-              </Button>
-            </Grid>
-          )}
-        </Grid>
-      )}
-    </>
-  );
 };
 
 export default Login;

@@ -26,15 +26,12 @@ export const saveState = state => {
 export const retrieveData = (strName, useSession = false) => {
   try {
     const storage = useSession ? localStorage : sessionStorage;
+    
     if (typeof storage !== 'undefined' && storage.getItem('cookie')) {
       const strCookieJson = storage.getItem('cookie');
+      
       if (strCookieJson && strCookieJson !== '') {
-        const CookieJson = JSON.parse(
-          CryptoJS.AES.decrypt(
-            strCookieJson,
-            'sd445bdjfdf9sdfds#hddd'
-          ).toString(CryptoJS.enc.Utf8)
-        );
+        const CookieJson = JSON.parse(strCookieJson);
         if (CookieJson && CookieJson[strName]) {
           return CookieJson[strName];
         }
@@ -57,29 +54,11 @@ export const persistData = (strName, objPayload, useSession = true) => {
   if (typeof storage !== 'undefined') {
     const strCookieJson = storage.getItem('cookie');
     if (strCookieJson) {
-      const CookieJson = JSON.parse(
-        CryptoJS.AES.decrypt(strCookieJson, 'sd445bdjfdf9sdfds#hddd').toString(
-          CryptoJS.enc.Utf8
-        )
-      );
+      const CookieJson = JSON.parse(strCookieJson);
       CookieJson[strName] = objPayload;
-      storage.setItem(
-        'cookie',
-        CryptoJS.AES.encrypt(
-          JSON.stringify(CookieJson),
-          'sd445bdjfdf9sdfds#hddd'
-        )
-      );
     } else {
       const CookieJson = {};
       CookieJson[strName] = objPayload;
-      storage.setItem(
-        'cookie',
-        CryptoJS.AES.encrypt(
-          JSON.stringify(CookieJson),
-          'sd445bdjfdf9sdfds#hddd'
-        )
-      );
     }
   }
 };
@@ -94,18 +73,11 @@ export const removeData = (strName, useSession = true) => {
   if (typeof storage !== 'undefined') {
     const strCookieJson = storage.getItem('cookie');
     if (strCookieJson) {
-      const CookieJson = JSON.parse(
-        CryptoJS.AES.decrypt(strCookieJson, 'sd445bdjfdf9sdfds#hddd').toString(
-          CryptoJS.enc.Utf8
-        )
-      );
+      const CookieJson = JSON.parse(strCookieJson);
       delete CookieJson[strName];
       storage.setItem(
         'cookie',
-        CryptoJS.AES.encrypt(
-          JSON.stringify(CookieJson),
-          'sd445bdjfdf9sdfds#hddd'
-        )
+        JSON.stringify(CookieJson)
       );
     }
   }

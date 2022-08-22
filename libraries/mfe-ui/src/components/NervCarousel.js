@@ -21,14 +21,14 @@ const NervCarousel = forwardRef((props, ref) => {
   const defaultResponsive = {
     infinity: {
       breakpoint: { max: 5000, min: breakpoints.values.xl + 1 },
-      items: infinityItems || 3,
+      items: infinityItems || 4,
     },
     xl: {
       breakpoint: {
         max: breakpoints.values.xl,
         min: breakpoints.values.lg + 1,
       },
-      items: xlItems || 3,
+      items: xlItems || 4,
     },
     lg: {
       breakpoint: {

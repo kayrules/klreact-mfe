@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { createLogger } from 'redux-logger'
-import { reducer as lifestyleReducer } from "lifestyle/redux/store"
+// import Loadable from 'react-loadable';
+// import { reducer as lifestyleReducer } from "lifestyle/redux/store"
 import { reducer as authReducer } from "auth/redux"
 
 export const reducer = {
   ...authReducer,
-  ...lifestyleReducer,
+  // ...lifestyleReducer,
+  global: {}
 }
 
 const logger = createLogger({

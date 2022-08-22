@@ -1,8 +1,8 @@
 import "./assets/css/style.css";
 
 // -- custom themes
-export { Button, Box, MockComponent, NervCarousel } from "./components";
-export { breakpoints, useDimensions } from "./utils";
+export { Button, Box, MockComponent, NervCarousel, ErrorBoundary } from "./components";
+export { breakpoints, useDimensions, useCarouselWidth } from "./utils";
 export { defaultTheme } from "./themes";
 
 // -- vanilla @mui-v5
@@ -21,6 +21,7 @@ export {
   CardActions,
   CardContent,
   CardMedia,
+  Link,
 } from "@mui/material";
 
 export { createTheme, ThemeProvider } from "@mui/material/styles";

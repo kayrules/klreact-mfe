@@ -1,1 +1,1 @@
-export { useCarouselWidth } from './useCarouselWidth';
+export { useCarouselWidth } from '@klreact-mfe/mfe-ui';

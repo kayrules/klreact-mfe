@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { AppBar, Toolbar, Box, Button, Typography } from "@klreact-mfe/mfe-ui";
-import logo from "../assets/rhb-logo.svg";
+import logo from "../assets/bank-logo.png";
 import { includeBp, getDeviceConfig } from "../utils";
 import { throttle } from "lodash";
 import ProfilePicPlaceholder from "../assets/profile-pic-placeholder.png";
@@ -8,64 +8,6 @@ import WhiteSettingsSvg from "../assets/icons-white-settings.svg";
 import WhiteInboxSvg from "../assets/icons-white-inbox.svg";
 import MenuSvg from "../assets/icons-menu.svg";
 import moment from 'moment';
-
-const styles = {
-  "@global": {
-    body: {
-      margin: 0,
-    },
-    a: {
-      textDecoration: "none",
-    },
-  },
-  outerContainer: {
-    maxWidth: "1650px",
-    margin: "auto",
-    justifyContent: "center",
-    alignItems: "center",
-    minWidth: '352px',
-  },
-  appBar: {
-    borderBottom: `1px solid none`,
-    backgroundColor: "transparent",
-  },
-  toolbar: {
-    display: "flex",
-    flexWrap: "wrap",
-    padding: "0 42px",
-    minHeight: "70px",
-    alignItems: "center",
-  },
-  logo: {
-    width: "74px",
-    height: "27px",
-    marginBottom: "5px",
-    marginRight: "20px",
-  },
-  barLink: {
-    color: "#fff",
-    fontSize: "14px",
-    margin: "0 18px",
-  },
-  profilePic: {
-    width: 62,
-    height: 62,
-    border: "3px solid #ffffff",
-    borderRadius: "51px",
-  },
-  profilePicBorder: {
-    display: "flex",
-    width: 68,
-    height: 68,
-    borderRadius: "51px",
-    backgroundImage: "linear-gradient(111deg, #5bc2e7 23%, #1078b9 128%)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  icons: {
-    margin: "0 0 0 17px",
-  },
-};
 
 export default function Header({ signedIn, onSignOut }) {
   const headerHeightFull = 238;
@@ -113,28 +55,6 @@ export default function Header({ signedIn, onSignOut }) {
         setIsSmall(true);
       }
     }, 200);
-    window.addEventListener("resize", calcInnerWidth);
-
-    // Sticky
-    if (window.location.pathname === "/dashboard") {
-      const scrollCallBack = window.addEventListener("scroll", () => {
-        if (window.scrollY > headerHeightFull - headerHeightSmall) {
-          setHeaderPosition("fixed");
-          setHeaderHeight(headerHeightSmall);
-          setIsSmall(true);
-        } else {
-          setHeaderPosition("relative");
-          setHeaderHeight(headerHeightFull);
-          setIsSmall(false);
-        }
-      });
-    }
-
-    return () => {
-      window.removeEventListener("resize", calcInnerWidth);
-      if (window.location.pathname === "/dashboard")
-        window.removeEventListener("scroll", scrollCallBack);
-    };
   }, []);
 
   const onClick = () => {
@@ -164,7 +84,7 @@ export default function Header({ signedIn, onSignOut }) {
   const appBarContainerSmallStyle = () => {
     if (checkPath("/dashboard")) {
       return {
-        backgroundColor: "#5bc2e7",
+        backgroundColor: "#6b8e02",
         position: headerPosition,
         width: "100%",
         left: headerPosition === "fixed" && "50%",
@@ -174,7 +94,7 @@ export default function Header({ signedIn, onSignOut }) {
       return {};
     } else {
       return {
-        backgroundColor: "#5bc2e7",
+        backgroundColor: "red",
         marginBottom: "18px",
         position: "fixed",
         width: "100%",
@@ -311,8 +231,8 @@ export default function Header({ signedIn, onSignOut }) {
     const typicalMenu = {
       height: "30px",
       marginRight: includeBp(['xs', 'sm']) ? '10px' : "16px",
-      borderRadius: "15px",
-      backgroundColor: "#5bc2e7",
+      borderRadius: "5px",
+      backgroundColor: "rgba(255,255,255,0.3)",
       border: "1px solid #fff",
       alignItems: "center",
       marginBottom: includeBp(["xs", "sm"]) && "8px",
@@ -407,31 +327,12 @@ export default function Header({ signedIn, onSignOut }) {
         <Box
           sx={{
             position: "relative",
-            backgroundImage:
-              "radial-gradient(circle at 47% -16%, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.1) 60%, rgba(255, 255, 255, 0) 92%)",
             width: "100%",
             height: "174px",
-            borderRadius: "12px 12px 0 0",
           }}
         >
           <Box
-            sx={{
-              position: "absolute",
-              bottom: 0,
-              backgroundColor: "#5bc2e7",
-              backgroundImage:
-                "linear-gradient(to bottom, rgba(91, 194, 231, 0.1) -14%, rgba(91, 194, 231, 0.07) 51%, rgba(91, 194, 231, 0) 77%)",
-              backgroundBlendMode: "multiply",
-              width: "100%",
-              height: "173px",
-              borderRadius: "12px 12px 0 0",
-              paddingLeft: includeBp(["xs", "sm"]) ? "20px" : "30px",
-              paddingRight: includeBp(["xs", "sm"]) ? "20px" : "30px",
-              paddingTop: includeBp(["xs", "sm"]) ? "20px" : "30px",
-              paddingBottom: includeBp(["xs", "sm"]) ? "20px" : "30px",
-              display: "flex",
-              flexDirection: "column",
-            }}
+            sx={styles.curveBox}
           >
             <Box
               sx={{
@@ -488,20 +389,6 @@ export default function Header({ signedIn, onSignOut }) {
 
   return (
     <React.Fragment>
-      {checkPath("/dashboard") && (
-        <Box
-          style={{
-            position: headerPosition === "fixed" ? "fixed" : "absolute",
-            width: "100%",
-            height: headerHeight,
-            left: 0,
-            paddingLeft: 138,
-            paddingRight: 138,
-            boxShadow: "0px 2px 8px rgba(0,0,0,0.2)",
-            zIndex: 1,
-          }}
-        />
-      )}
       <Box
         sx={{
           ...styles.outerContainer,
@@ -528,7 +415,7 @@ export default function Header({ signedIn, onSignOut }) {
               </Box>
             )}
             <a href="/">
-              <img src={logo} alt="Logo" sx={styles.logo} />
+              <Box component="img" src={logo} alt="Logo" sx={styles.logo} />
             </a>
             {isSmall && (
               <Box sx={{ display: "flex", marginLeft: "40px" }}>
@@ -624,43 +511,24 @@ export default function Header({ signedIn, onSignOut }) {
                   )}
                 </Box>
                 <Box sx={{ display: "flex" }}>
-                  <Typography
-                    color="inherit"
-                    sx={{ ...styles.barLink }}
-                    noWrap
-                    to="/"
-                  >
-                    LOG OUT
-                  </Typography>
+                  <a href="/">
+                    <Typography
+                      color="inherit"
+                      sx={{ ...styles.barLink }}
+                      noWrap
+                      to="/"
+                    >
+                      LOG OUT
+                    </Typography>
+                  </a>
                 </Box>
               </Box>
             )}
-            {/* <Typography color="inherit" sx={styles.barLink} noWrap component={RouterLink} to="/">
-              RHB Mobile Banking
-            </Typography>
-            <Typography color="inherit" sx={styles.barLink} noWrap component={RouterLink} to="/">
-              Get Help &amp; Support
-            </Typography>
-            <Button
-              color="primary"
-              variant="outlined"
-              sx={styles.barLink}
-              component={RouterLink}
-              to={signedIn ? "/" : "/auth/signin"}
-              onClick={onClick}
-            >
-              {signedIn ? "Logout" : "Login"}
-            </Button> */}
           </Toolbar>
         </AppBar>
         {checkPath("/dashboard") && headerPosition === "relative" && (
           <Box
-            style={{
-              display: "flex",
-              padding: 0,
-              width: "100%",
-              justifyContent: "center",
-            }}
+            style={styles.headerBg}
           >
             <DashboardBanner currentBP={currentBP} />
           </Box>
@@ -678,3 +546,80 @@ export default function Header({ signedIn, onSignOut }) {
     </React.Fragment>
   );
 }
+
+const styles = {
+  "@global": {
+    body: {
+      margin: 0,
+    },
+    a: {
+      textDecoration: "none",
+    },
+  },
+  headerBg: {
+    display: "flex",
+    padding: 0,
+    width: "100%",
+    justifyContent: "center",
+    // background: "#333333 url(https://images6.fanpop.com/image/photos/34500000/Green-Wallpaper-colors-34511120-1920-1200.jpg) center",
+    background: "green url(https://assets.imgix.net/examples/kingfisher.jpg?w=1611&h=500&crop=center&fit=crop) center",
+  },
+  outerContainer: {
+    maxWidth: "1650px",
+    margin: "auto",
+    justifyContent: "center",
+    alignItems: "center",
+    minWidth: '352px',
+  },
+  appBar: {
+    borderBottom: `1px solid none`,
+    backgroundColor: "transparent",
+  },
+  toolbar: {
+    display: "flex",
+    flexWrap: "wrap",
+    padding: "0 42px",
+    minHeight: "70px",
+    alignItems: "center",
+  },
+  logo: {
+    height: "27px",
+    marginBottom: "5px",
+    marginRight: "20px",
+    marginLeft: "20px",
+  },
+  barLink: {
+    color: "#fff",
+    fontSize: "14px",
+    margin: "0 18px",
+  },
+  profilePic: {
+    width: 62,
+    height: 62,
+    border: "3px solid #ffffff",
+    borderRadius: "51px",
+  },
+  profilePicBorder: {
+    display: "flex",
+    width: 68,
+    height: 68,
+    borderRadius: "51px",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  icons: {
+    margin: "0 0 0 17px",
+  },
+  curveBox: {
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    height: "173px",
+    paddingLeft: includeBp(["xs", "sm"]) ? "20px" : "30px",
+    paddingRight: includeBp(["xs", "sm"]) ? "20px" : "30px",
+    paddingTop: includeBp(["xs", "sm"]) ? "20px" : "30px",
+    paddingBottom: includeBp(["xs", "sm"]) ? "20px" : "30px",
+    display: "flex",
+    flexDirection: "column",
+  }
+};

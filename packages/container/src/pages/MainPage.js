@@ -1,12 +1,26 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, Suspense } from "react";
 import { useDispatch } from 'react-redux'
-import { Login } from "auth/components";
-import { HomeCarousel } from "lifestyle/components";
-import { Grid, Box, Container, Typography, breakpoints } from "@klreact-mfe/mfe-ui";
-import ByYouText from "_components/ByYouText";
+import Loadable from 'react-loadable';
+// import { Login } from "auth/components";
+// import { HomeCarousel } from "lifestyle/components";
+import { Grid, Box, Container, Typography, breakpoints, MockComponent } from "@klreact-mfe/mfe-ui";
 import { getCarouselHeight, getBreakpoint } from "../utils";
-import { globalActions } from "auth/redux";
-import Header from '_components/Header'
+// import { globalActions } from "auth/redux";
+import Header from '_components/Header';
+import Footer from '_components/Footer';
+
+// const { Login } = lazily(() => import("auth/components"));
+// const { HomeCarousel } = lazily(() => import("lifestyle/components"));
+
+const Login = Loadable({
+  loader: () => import('auth/components').then(c => c.Login),
+  loading: () => <MockComponent />
+});
+
+const HomeCarousel = Loadable({
+  loader: () => import('lifestyle/components').then(c => c.HomeCarousel),
+  loading: () => <MockComponent sx={{ height: '300px' }} />
+});
 
 const MainPage = () => {
   const dispatch = useDispatch()
@@ -14,9 +28,9 @@ const MainPage = () => {
   const carouselRef = useRef(null);
   const carouselHeight = getCarouselHeight(carouselRef);
 
-  useEffect(() => {
-    dispatch(globalActions.init())
-  }, [])
+  // useEffect(() => {
+  //   dispatch(globalActions.init())
+  // }, [])
 
   const HeroBox = () => (
     <Grid container columns={20} sx={styles.heroBox}>
@@ -33,14 +47,19 @@ const MainPage = () => {
           <Box sx={styles.titleBox}>
             <Typography sx={styles.textTitle} fontWeight="fontWeightBold">Innovative Banking</Typography>
           </Box>
-          <Login sx={styles.login}>Auth: Login</Login>
-          <Typography sx={styles.forgotPass}>FORGOT USERNAME/PASSWORD</Typography>
+          
+          {/* <ErrorBoundary errorMessage="Ops.. Auth service down"> */}
+            <Login sx={styles.login}>Auth: Login</Login>
+          {/* </ErrorBoundary> */}
+
+          <Typography sx={styles.forgotPass}>FORGOT PASSWORD</Typography>
         </Box>
-        <div ref={carouselRef} style={{ marginTop: '200px', ...carouselHeight }}>
-          <h3>Explore / Promotion</h3>
-          <HomeCarousel sx={{ height: '100%' }} bp={getBreakpoint()}>Lifestyle: Carousel</HomeCarousel>
+        <div ref={carouselRef} style={{ marginTop: '180px', ...carouselHeight }}>
+          <h3>Explore Lifestyle</h3>
+          <HomeCarousel bp={getBreakpoint()}>Lifestyle: Carousel</HomeCarousel>
         </div>
       </Container>
+      <Footer />
     </React.Fragment>
   );
 }
@@ -48,7 +67,7 @@ const MainPage = () => {
 const styles = {
   loginContainer: {
     [breakpoints.up('md')]: {
-      width: '41%',
+      width: '46%',
       margin: 'auto',
     },
     [breakpoints.down('md')]: {
@@ -78,7 +97,7 @@ const styles = {
       height: '500px',
     },
     [breakpoints.down('md')]: {
-      height: '320px',
+      height: '500px',
     },
     [breakpoints.down('sm')]: {
       height: '459px',
@@ -97,7 +116,8 @@ const styles = {
     margin: 0,
   },
   blueBox: {
-    background: "#333333 url(https://assets.imgix.net/examples/kingfisher.jpg?w=1611&h=500&crop=center&fit=crop) center",
+    background: "green url(https://assets.imgix.net/examples/kingfisher.jpg?w=1611&h=500&crop=center&fit=crop) center",
+    // background: "green url(https://images6.fanpop.com/image/photos/34500000/Green-Wallpaper-colors-34511120-1920-1200.jpg) center",
     height: "100%",
     display: "inline",
   },
@@ -116,12 +136,14 @@ const styles = {
     margin: 'auto',
   },
   textTitle: {
-    fontSize: '50px',
+    fontSize: '60px',
+    whiteSpace: 'nowrap',
     color: '#fff',
     display: 'block',
     textAlign: 'center',
     verticalAlign: 'top',
-    marginRight: '10px',
+    marginRight: 'auto',
+    marginLeft: 'auto',
     marginBottom: '50px',
     marginTop: '100px',
   },

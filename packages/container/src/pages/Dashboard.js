@@ -2,9 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import { Box, Grid, Typography, ChevronLeft, ChevronRight } from "@klreact-mfe/mfe-ui";
 import { getDeviceConfig, includeBp } from "../utils";
 import { throttle } from "lodash";
-import Alerts from "_components/Alerts";
-import Favourites from "_components/Favourites";
 import Header from "_components/Header";
+import Footer from "_components/Footer";
 import { JustForYou } from "lifestyle/components";
 
 const Dashboard = () => {
@@ -36,18 +35,14 @@ const Dashboard = () => {
 
     const calcInnerWidth = throttle(function () {
       setCurrentBP(getDeviceConfig(window.innerWidth));
-      if (includeBp(["md", "lg", "xl"]))
+      if (includeBp(["md", "lg", "xl"])) {
         setLeftContainerBoxWidth(document.querySelector("#boxy").clientWidth);
+      }
       setCarouselContainerSize(
         document.querySelector("#carouselContainer").clientWidth
       );
       calcJustForYouNumOfItems();
     }, 200);
-    window.addEventListener("resize", calcInnerWidth);
-
-    return () => {
-      window.removeEventListener("resize", calcInnerWidth);
-    };
 
   }, []);
 
@@ -126,18 +121,6 @@ const Dashboard = () => {
   return (
     <React.Fragment>
       <Header />
-      {/* This is to cater favourite background */}
-      <Box
-        sx={{
-          display: "block",
-          position: "absolute",
-          height: "135px",
-          backgroundColor: "#F7F9FB",
-          left: includeBp(["xs", "sm"]) ? "100px" : "0",
-          right: "0",
-          zIndex: -1,
-        }}
-      />
       <Box
         sx={{
           ...styles.outerContainer,
@@ -145,55 +128,13 @@ const Dashboard = () => {
           position: "relative",
         }}
       >
-        <Grid container columns={includeBp(['sm', "md", "lg", "xl"]) ? 14 : 10}>
-          {includeBp(['sm', "md", "lg", "xl"]) && (
-            <Grid item xs={4}>
-              <Box
-                id="boxy"
-                sx={{
-                  position: "relative",
-                  backgroundColor: "#f3fbfe",
-                  left: 0,
-                  right: 0,
-                  height: "100%",
-                }}
-              >
-                {includeBp(['sm', "md", "lg", "xl"]) && (
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      backgroundColor: "#f3fbfe",
-                      right: leftContainerBoxWidth,
-                      width: "1000%",
-                      height: "100%",
-                      zIndex: -1,
-                    }}
-                  />
-                )}
-                {/* To find a way to get the header height */}
-                <Alerts headerHeight="238" />
-              </Box>
-            </Grid>
-          )}
+        <Grid container columns={10}>
+          
           <Grid
             item
             xs={10}
             style={{ paddingLeft: !includeBp(['xs']) && "24px", backgroundColor: "#fff" }}
           >
-            <Box
-              sx={{
-                display: "block",
-                position: "relative",
-                paddingTop: "18px",
-                backgroundColor: "#ffffff",
-                backgroundImage:
-                  "linear-gradient(141deg, rgba(248, 248, 248, 0) 38%, rgba(237, 241, 246, 0.4) 59%)",
-                marginBottom: "41px",
-                height: "135px",
-              }}
-            >
-              <Favourites />
-            </Box>
             <Box
               id="carouselContainer"
               sx={{
@@ -207,6 +148,7 @@ const Dashboard = () => {
                   justifyContent: "space-between",
                   alignItems: "center",
                   marginBottom: "16px",
+                  marginTop: "30px",
                 }}
               >
                 <Typography
@@ -248,13 +190,13 @@ const Dashboard = () => {
                 flexDirection: "column",
                 marginTop: "38px",
               }}
-              id="asdasd"
             >
               <JustForYou numberOfItems={justForYouNumOfItems} />
             </Box>
           </Grid>
         </Grid>
       </Box>
+      <Footer />
     </React.Fragment>
   );
 };
@@ -271,6 +213,7 @@ const styles = {
     margin: "auto",
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "red"
   },
 };
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export const useCarouselWidth = myRef => {
+const useCarouselWidth = myRef => {
     const getDimensions = () => ({
         width: myRef.current.offsetWidth,
     })
@@ -25,3 +25,5 @@ export const useCarouselWidth = myRef => {
 
     return dimensions;
 };
+
+export { useCarouselWidth };

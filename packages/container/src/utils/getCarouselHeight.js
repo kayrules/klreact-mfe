@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useCarouselWidth } from "lifestyle/utils";
+import { useCarouselWidth } from "@klreact-mfe/mfe-ui";
 import { getBreakpoint } from './getBreakpoint';
 
 const maxCarouselWidth = 1425;
