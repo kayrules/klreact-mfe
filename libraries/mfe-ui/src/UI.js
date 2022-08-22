@@ -1,7 +1,7 @@
 import "./assets/css/style.css";
 
 // -- custom themes
-export { Button, Box, MockComponent, NervCarousel, ErrorBoundary } from "./components";
+export { Button, Box, MockComponent, NervCarousel, SafeComponent } from "./components";
 export { breakpoints, useDimensions, useCarouselWidth } from "./utils";
 export { defaultTheme } from "./themes";
 

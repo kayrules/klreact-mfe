@@ -1,36 +1,27 @@
 import React, { useRef, useEffect, Suspense } from "react";
 import { useDispatch } from 'react-redux'
 import Loadable from 'react-loadable';
-// import { Login } from "auth/components";
-// import { HomeCarousel } from "lifestyle/components";
-import { Grid, Box, Container, Typography, breakpoints, MockComponent } from "@klreact-mfe/mfe-ui";
+import { Grid, Box, Container, Typography, breakpoints, MockComponent, SafeComponent } from "@klreact-mfe/mfe-ui";
 import { getCarouselHeight, getBreakpoint } from "../utils";
-// import { globalActions } from "auth/redux";
 import Header from '_components/Header';
 import Footer from '_components/Footer';
 
-// const { Login } = lazily(() => import("auth/components"));
-// const { HomeCarousel } = lazily(() => import("lifestyle/components"));
+// import { Login } from "auth/components";
+// import { HomeCarousel } from "lifestyle/components";
 
 const Login = Loadable({
   loader: () => import('auth/components').then(c => c.Login),
-  loading: () => <MockComponent />
+  loading: () => <MockComponent placeholder="Login Form" />
 });
 
 const HomeCarousel = Loadable({
   loader: () => import('lifestyle/components').then(c => c.HomeCarousel),
-  loading: () => <MockComponent sx={{ height: '300px' }} />
+  loading: () => <MockComponent placeholder="Carousel" sx={{ height: '300px' }} />
 });
 
 const MainPage = () => {
-  const dispatch = useDispatch()
-
   const carouselRef = useRef(null);
   const carouselHeight = getCarouselHeight(carouselRef);
-
-  // useEffect(() => {
-  //   dispatch(globalActions.init())
-  // }, [])
 
   const HeroBox = () => (
     <Grid container columns={20} sx={styles.heroBox}>
@@ -48,15 +39,19 @@ const MainPage = () => {
             <Typography sx={styles.textTitle} fontWeight="fontWeightBold">Innovative Banking</Typography>
           </Box>
           
-          {/* <ErrorBoundary errorMessage="Ops.. Auth service down"> */}
-            <Login sx={styles.login}>Auth: Login</Login>
-          {/* </ErrorBoundary> */}
+          <SafeComponent>
+            <Login sx={styles.login} />
+          </SafeComponent>
 
           <Typography sx={styles.forgotPass}>FORGOT PASSWORD</Typography>
         </Box>
         <div ref={carouselRef} style={{ marginTop: '180px', ...carouselHeight }}>
           <h3>Explore Lifestyle</h3>
-          <HomeCarousel bp={getBreakpoint()}>Lifestyle: Carousel</HomeCarousel>
+
+          <SafeComponent>
+            <HomeCarousel bp={getBreakpoint()} />
+          </SafeComponent>
+          
         </div>
       </Container>
       <Footer />

@@ -16,7 +16,6 @@ const prodConfig = {
       exposes: {
         './App': './src/bootstrap',
         './components': './src/components',
-        './redux': './src/redux',
       },
       shared: {
         ...deps,

@@ -26,7 +26,7 @@ const styles = {
 const MockComponent = (props) => (
   <MuiBox sx={{ ...styles.container, ...styles.crossed, ...props.sx}}>
     <MuiBox sx={{ ...styles.child }}>
-      {props.children || <Typography>Placeholder</Typography>}
+      <Typography>{props.placeholder ? props.placeholder : 'Placeholder' }</Typography>
     </MuiBox>
   </MuiBox>
 );

@@ -3,10 +3,7 @@ import { Switch, Route, Router } from 'react-router-dom';
 import { defaultTheme, ThemeProvider } from "@klreact-mfe/mfe-ui";
 import { Provider } from 'react-redux'
 import store from './redux/store'
-
-import Landing from './components/Landing';
-import Explore from './components/Explore';
-import HomeCarousel from './components/HomeCarousel';
+import { Landing, Explore, JustForYou, HomeCarousel } from './components';
 import ReduxTest from './components/ReduxTest';
 
 export default ({ history }) => {
@@ -15,10 +12,11 @@ export default ({ history }) => {
       <ThemeProvider theme={defaultTheme}>
         <Router history={history}>
           <Switch>
-            <Route path="/lifestyle/carousel" component={HomeCarousel} />
+            <Route exact path="/lifestyle/carousel" component={HomeCarousel} />
             <Route exact path="/lifestyle/explore" component={Explore} />
+            <Route exact path="/lifestyle/promo" component={JustForYou} />
             <Route exact path="/lifestyle/redux" component={ReduxTest} />
-            <Route path="/lifestyle" component={Landing} />
+            <Route path="/" component={Landing} />
           </Switch>
         </Router>
       </ThemeProvider>

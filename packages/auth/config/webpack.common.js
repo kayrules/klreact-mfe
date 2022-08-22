@@ -27,8 +27,6 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        APP_KEY: JSON.stringify(process.env.APP_KEY),
-        APP_SECRET: JSON.stringify(process.env.APP_SECRET),
         BASE_URL: JSON.stringify(process.env.BASE_URL),
       }
     }),

@@ -34,7 +34,7 @@ export default function() {
               color="textPrimary"
               gutterBottom
             >
-              Pre-login
+              Lifestyles
             </Typography>
             <Typography
               variant="h5"
@@ -42,7 +42,7 @@ export default function() {
               color="textSecondary"
               paragraph
             >
-              This is the landing page
+              Component showcase
             </Typography>
             <div sx={styles.heroButtons}>
               <Grid container spacing={2} justifyContent="center">
@@ -54,9 +54,23 @@ export default function() {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link to="/auth">
-                    <Button variant="outlined" color="primary">
-                      Login
+                  <Link to="/lifestyle/carousel">
+                    <Button variant="contained" color="primary">
+                      Carousel
+                    </Button>
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link to="/lifestyle/promo">
+                    <Button variant="contained" color="primary">
+                      Promo
+                    </Button>
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link to="/lifestyle/redux">
+                    <Button variant="contained" color="primary">
+                      Redux Test
                     </Button>
                   </Link>
                 </Grid>
