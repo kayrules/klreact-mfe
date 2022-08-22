@@ -209,7 +209,7 @@ const styles = {
     padding: 0,
   },
   outerContainer: {
-    maxWidth: "1425px",
+    // maxWidth: "1425px",
     margin: "auto",
     justifyContent: "center",
     alignItems: "center",

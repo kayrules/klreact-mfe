@@ -10,7 +10,6 @@ const AuthLazy = lazy(() => import("./components/AuthApp"));
 const DashboardLazy = lazy(() => import("./pages/Dashboard"));
 const MainPage = lazy(() => import("./pages/MainPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
-// const ReduxTest = lazy(() => import("./pages/ReduxTest"));
 
 export default () => {
 
@@ -25,7 +24,6 @@ export default () => {
               <Route path="/auth" component={AuthLazy} />
               <Route path="/dashboard" component={DashboardLazy} />
               <Route path="/lifestyle" component={LifestyleLazy} />
-              {/* <Route path="/redux" component={ReduxTest} /> */}
               <Route component={NotFound} />
             </Switch>
           </Suspense>

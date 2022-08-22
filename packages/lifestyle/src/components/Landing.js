@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Container, Grid, Button, makeStyles } from '@klreact-mfe/mfe-ui';
+import { Typography, Container, Grid, Box, Button, makeStyles } from '@klreact-mfe/mfe-ui';
 import { Link } from 'react-router-dom';
 
 const styles = {
@@ -25,7 +25,7 @@ export default function() {
   return (
     <React.Fragment>
       <main>
-        <div sx={styles.heroContent}>
+        <Box sx={styles.heroContent}>
           <Container maxWidth="sm">
             <Typography
               component="h1"
@@ -44,7 +44,7 @@ export default function() {
             >
               Component showcase
             </Typography>
-            <div sx={styles.heroButtons}>
+            <Box sx={styles.heroButtons}>
               <Grid container spacing={2} justifyContent="center">
                 <Grid item>
                   <Link to="/lifestyle/explore">
@@ -74,10 +74,17 @@ export default function() {
                     </Button>
                   </Link>
                 </Grid>
+                <Grid item>
+                  <Link to="/auth">
+                    <Button variant="outline" color="primary">
+                      Login Demo
+                    </Button>
+                  </Link>
+                </Grid>
               </Grid>
-            </div>
+            </Box>
           </Container>
-        </div>
+        </Box>
       </main>
     </React.Fragment>
   );

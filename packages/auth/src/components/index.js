@@ -1,3 +1,4 @@
 import Login from "./Login";
+import Landing from "./Landing";
 
-export { Login };
+export { Login, Landing };

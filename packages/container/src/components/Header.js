@@ -565,7 +565,7 @@ const styles = {
     background: "green url(https://assets.imgix.net/examples/kingfisher.jpg?w=1611&h=500&crop=center&fit=crop) center",
   },
   outerContainer: {
-    maxWidth: "1650px",
+    // maxWidth: "1650px",
     margin: "auto",
     justifyContent: "center",
     alignItems: "center",
