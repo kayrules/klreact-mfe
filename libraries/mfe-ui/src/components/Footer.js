@@ -1,5 +1,6 @@
 import React from 'react';
-import { Typography, Grid, Box, Link, breakpoints, Container } from '@klreact-mfe/mfe-ui';
+import { Typography, Grid, Box, Link, Container } from '../UI';
+import { breakpoints } from '../utils';
 
 const footers = [
   {
@@ -44,7 +45,7 @@ function Copyright() {
   );
 }
 
-export default function Footer() {
+const Footer = () => {
   return (
     <Box sx={{ ...styles.footerBox, ...styles.footerMargin}}>
       <Container variant="footer">
@@ -77,7 +78,7 @@ export default function Footer() {
 
 const styles = {
   footerBox: {
-    backgroundColor: "#333",
+    backgroundColor: "#333000",
     color: "white",
   },
   footerMargin: {
@@ -103,3 +104,5 @@ const styles = {
     paddingTop: "20px",
   }
 }
+
+export { Footer };

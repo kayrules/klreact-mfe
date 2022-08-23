@@ -5,7 +5,7 @@ const commonConfig = require('./webpack.common');
 const deps = require('../package.json').dependencies;
 
 const baseURL = `http://localhost`;
-const port = 8081;
+const port = 3002;
 
 const devConfig = {
   mode: 'development',

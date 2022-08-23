@@ -1,10 +1,8 @@
-import React, { useRef, useEffect, Suspense } from "react";
-import { useDispatch } from 'react-redux'
+import React, { useRef } from "react";
 import Loadable from 'react-loadable';
-import { Grid, Box, Container, Typography, breakpoints, MockComponent, SafeComponent } from "@klreact-mfe/mfe-ui";
+import { Grid, Box, Container, Typography, breakpoints, MockComponent, SafeComponent, Footer } from "@klreact-mfe/mfe-ui";
 import { getCarouselHeight, getBreakpoint } from "../utils";
 import Header from '_components/Header';
-import Footer from '_components/Footer';
 
 // import { Login } from "auth/components";
 // import { HomeCarousel } from "lifestyle/components";

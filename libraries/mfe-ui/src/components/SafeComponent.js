@@ -12,7 +12,7 @@ class SafeComponent extends Component {
     }
 
     componentDidCatch(error, errorInfo) {
-        console.error("Bounded error:", error, errorInfo);
+        console.error("ERROR BOUNDARY:", error, errorInfo);
     }
 
     render() {

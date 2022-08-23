@@ -1,10 +1,15 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Box, Grid, Typography, ChevronLeft, ChevronRight } from "@klreact-mfe/mfe-ui";
+import { Box, Grid, Typography, ChevronLeft, ChevronRight, Footer } from "@klreact-mfe/mfe-ui";
 import { getDeviceConfig, includeBp } from "../utils";
 import { throttle } from "lodash";
+import Loadable from 'react-loadable';
 import Header from "_components/Header";
-import Footer from "_components/Footer";
-import { JustForYou } from "lifestyle/components";
+
+// import { JustForYou } from "lifestyle/components";
+const JustForYou = Loadable({
+  loader: () => import('lifestyle/components').then(c => c.JustForYou),
+  loading: () => <div>Loading ...</div>
+});
 
 const Dashboard = () => {
   const [leftContainerBoxWidth, setLeftContainerBoxWidth] = useState(0);
