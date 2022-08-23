@@ -37,9 +37,9 @@ const MainPage = () => {
             <Typography sx={styles.textTitle} fontWeight="fontWeightBold">Innovative Banking</Typography>
           </Box>
           
-          <SafeComponent>
             <Login sx={styles.login} />
-          </SafeComponent>
+          {/* <SafeComponent>
+          </SafeComponent> */}
 
           <Typography sx={styles.forgotPass}>FORGOT PASSWORD</Typography>
         </Box>
