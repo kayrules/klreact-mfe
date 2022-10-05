@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 import {
   Button,
   Typography,
@@ -8,17 +8,17 @@ import {
   Box,
   useDimensions,
   CheckCircle as CheckCircleIcon,
-  Cancel as CancelIcon
+  Cancel as CancelIcon,
 } from "@klreact-mfe/mfe-ui";
 import secureImage from "../assets/secure-image.jpg";
-import styles from './styles';
+import styles from "./styles";
 
 const Login = () => {
   const loginRef = useRef(null);
   const { width } = useDimensions(loginRef);
   const history = useHistory();
 
-  const [secretPhrase, showSecretPhrase] = useState(false)
+  const [secretPhrase, showSecretPhrase] = useState(false);
   const [secureWordWidth, setSecureWordWidth] = useState(0);
   const [loginPressed, setLoginPressed] = useState(false);
   const [isSecureWord, setIsSecureWord] = useState(false);
@@ -45,14 +45,14 @@ const Login = () => {
   const onGetSecretPhrase = (event) => {
     event.preventDefault();
 
-    const usernameWithoutSpaces = username?.replace(/^\s+|\s+$/g, '');
+    const usernameWithoutSpaces = username?.replace(/^\s+|\s+$/g, "");
     if (usernameWithoutSpaces.length >= 6) {
       showSecretPhrase(true);
     } else {
       // return error here
-      console.error('Must be at least 6 chars')
+      console.error("Must be at least 6 chars");
     }
-  }
+  };
 
   const onLogin = (event) => {
     event.preventDefault();
@@ -60,8 +60,8 @@ const Login = () => {
       userId: username,
       password: password,
     };
-    history.push('/dashboard');
-  }
+    history.push("/dashboard");
+  };
 
   return (
     <>
@@ -76,7 +76,11 @@ const Login = () => {
           direction="row"
           justifyContent="space-between"
           alignItems="center"
-          sx={loginPressed ? { ...styles.gridSubContainer, ...styles.greyBg } : { ...styles.gridSubContainer }}
+          sx={
+            loginPressed
+              ? { ...styles.gridSubContainer, ...styles.greyBg }
+              : { ...styles.gridSubContainer }
+          }
         >
           <Box sx={styles.outerBox}>
             <TextField
@@ -87,7 +91,11 @@ const Login = () => {
                 sx: loginPressed ? styles.inputWithoutLabel : styles.input,
               }}
               InputLabelProps={{
-                sx: loginPressed ? styles.inputLabelDisappear : focused || shrink ? styles.inputLabelFocused : styles.inputLabelNoShrink,
+                sx: loginPressed
+                  ? styles.inputLabelDisappear
+                  : focused || shrink
+                  ? styles.inputLabelFocused
+                  : styles.inputLabelNoShrink,
               }}
               onChange={(event) => setUsername(event.target.value)}
               onFocus={(event) => {
@@ -118,22 +126,31 @@ const Login = () => {
       {loginPressed && (
         <Grid
           container
-          sx={{ ...styles.mainContainer, ...styles.secureWordContainer, width: secureWordWidth }}
+          sx={{
+            ...styles.mainContainer,
+            ...styles.secureWordContainer,
+            width: secureWordWidth,
+          }}
         >
           <Grid
             container
-            style={{ justifyContent: "center", paddingTop: '24px' }}
+            style={{ justifyContent: "center", paddingTop: "24px" }}
           >
             <Grid item sx={styles.blueBox}>
-              <Box component="img" src={secureImage} alt="Secure Image" sx={styles.secureImage} />
+              <Box
+                component="img"
+                src={secureImage}
+                alt="Secure Image"
+                sx={styles.secureImage}
+              />
             </Grid>
           </Grid>
           <Grid
             container
             sx={{
               justifyContent: "center",
-              paddingTop: '16px',
-              paddingBottom: '16px',
+              paddingTop: "16px",
+              paddingBottom: "16px",
             }}
           >
             <Grid item>
@@ -146,7 +163,7 @@ const Login = () => {
             container
             sx={{
               justifyContent: "center",
-              paddingBottom: '20px',
+              paddingBottom: "20px",
             }}
           >
             <CheckCircleIcon
@@ -167,7 +184,7 @@ const Login = () => {
               container
               sx={{
                 justifyContent: "flex-end",
-                paddingBottom: '20px',
+                paddingBottom: "20px",
               }}
             >
               <TextField
@@ -179,7 +196,7 @@ const Login = () => {
                 InputProps={{
                   sx: styles.passwordInputProp,
                 }}
-                onChange={event => setPassword(event.target.value)}
+                onChange={(event) => setPassword(event.target.value)}
               />
               <Button
                 variant="contained"

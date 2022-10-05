@@ -33,7 +33,7 @@ const devConfig = {
           requiredVersion: deps["react-dom"],
         },
         "@klreact-mfe/mfe-ui": {
-          singleton: true
+          singleton: true,
         },
       },
     }),
