@@ -22,5 +22,6 @@ yarn build:all
 
 ## Running local build files from ./dist
 ```
-npm serve ./dist
+npx serve ./dist
+open http://localhost:3000
 ```
