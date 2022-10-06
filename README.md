@@ -1,8 +1,12 @@
-# Micro-Frontend boilerplate - klreact-mfe
+# Micro-Frontend Demo for klreact-mfe (2022)
+
+## Installing all packages
+```
+yarn install
+```
 
 ## Starting all services
 ```
-yarn install
 yarn start:all
 ```
 
@@ -16,7 +20,6 @@ yarn start:container
 ## Build all services for deployment
 ```
 mv .env.example .env
-yarn install
 yarn build:all
 ```
 
