@@ -19,3 +19,8 @@ mv .env.example .env
 yarn install
 yarn build:all
 ```
+
+## Running local build files from ./dist
+```
+npm serve ./dist
+```
