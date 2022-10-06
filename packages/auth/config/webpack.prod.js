@@ -1,21 +1,21 @@
-const { merge } = require('webpack-merge');
-const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
-const deps = require('../package.json').dependencies;
-const commonConfig = require('./webpack.common');
+const { merge } = require("webpack-merge");
+const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+const deps = require("../package.json").dependencies;
+const commonConfig = require("./webpack.common");
 
 const prodConfig = {
-  mode: 'production',
+  mode: "production",
   output: {
-    filename: '[name].[contenthash].js',
-    publicPath: '/auth/latest/',
+    filename: "[name].[contenthash].js",
+    publicPath: "/auth/",
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: 'auth',
-      filename: 'remoteEntry.js',
+      name: "auth",
+      filename: "remoteEntry.js",
       exposes: {
-        './App': './src/bootstrap',
-        './components': './src/components',
+        "./App": "./src/bootstrap",
+        "./components": "./src/components",
       },
       shared: {
         ...deps,
@@ -28,7 +28,7 @@ const prodConfig = {
           requiredVersion: deps["react-dom"],
         },
         "@klreact-mfe/mfe-ui": {
-          singleton: true
+          singleton: true,
         },
       },
     }),

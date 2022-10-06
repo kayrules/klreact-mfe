@@ -1,5 +1,5 @@
 {
-  "name": "ibk-mfe",
+  "name": "klreact-mfe",
   "version": "1.0.0",
   "main": "index.js",
   "private": true,
@@ -11,10 +11,20 @@
     "start:auth": "yarn --cwd packages/auth start",
     "start:lifestyle": "yarn --cwd packages/lifestyle start",
     "start:ui-catalog": "yarn --cwd libraries/mfe-ui start",
-    "start": "yarn start:container & yarn start:auth & yarn start:lifestyle"
+    "build:container": "env-cmd -f ./.env yarn --cwd packages/container build && yarn mkpath ./dist/container && mv ./packages/container/dist ./dist/container && cp ./dist/container/index.html ./dist",
+    "build:auth": "yarn --cwd packages/auth build && yarn mkpath ./dist/auth && mv ./packages/auth/dist ./dist/auth",
+    "build:lifestyle": "yarn --cwd packages/lifestyle build && yarn mkpath ./dist/lifestyle && mv ./packages/lifestyle/dist ./dist/lifestyle",
+    "start:all": "yarn start:container & yarn start:auth & yarn start:lifestyle",
+    "build:all": "yarn build:container & yarn build:auth & yarn build:lifestyle",
+    "mkpath": "mkdirp ./dist && rimraf"
   },
   "workspaces": [
     "packages/*",
     "libraries/*"
-  ]
+  ],
+  "devDependencies": {
+    "env-cmd": "^10.1.0",
+    "mkdirp": "^1.0.4",
+    "rimraf": "^3.0.2"
+  }
 }
