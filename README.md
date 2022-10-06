@@ -1,4 +1,5 @@
-# Micro-Frontend Demo for klreact-mfe (2022)
+# Micro-Frontend Boilerplate: klreact-mfe
+This source code was made available as part of for KLReact, 2022 demo by me. You may find the [presentation deck here](https://docs.google.com/presentation/d/1WsZWe_u0eMohvjNcSDEMJBL85wY6FqzKA1aPANg_B7E/edit?usp=sharing)
 
 ## Installing all packages
 ```
